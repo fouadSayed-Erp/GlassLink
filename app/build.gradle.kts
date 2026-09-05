@@ -42,7 +42,7 @@ dependencies {
     implementation("com.google.android.gms:play-services-nearby:18.7.0")
     implementation("org.webrtc:google-webrtc:1.0.32006")
     implementation("androidx.security:security-crypto:1.1.0-alpha06")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play:1.7.3")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.3")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.2")
     implementation("com.google.accompanist:accompanist-permissions:0.32.0")
 }
