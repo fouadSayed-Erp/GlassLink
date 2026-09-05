@@ -1,5 +1,4 @@
 package com.glasslink.presentation.nearby
-import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -20,22 +19,28 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.animation.core.*
 import com.glasslink.presentation.components.*
+
 @Composable fun NearbyScannerScreen(peers: List<String> = emptyList()) { NearbyContent(peers) }
 @Composable fun NearbyScreen(peers: List<String> = emptyList()) { NearbyContent(peers) }
+
 @Composable fun NearbyContent(peers: List<String>) {
     var selectedMode by remember { mutableStateOf(ConnectionMode.AUTO) }
     var showOptions by remember { mutableStateOf(false) }
-    val infinite = rememberInfiniteTransition(label = "radar")
-    val pulse by infinite.animateFloat(0.9f, 1.15f, infiniteRepeatable(tween(1800), RepeatMode.Reverse), label = "")
+    val infinite = rememberInfiniteTransition(label="radar")
+    val pulse by infinite.animateFloat(0.9f, 1.15f, infiniteRepeatable(tween(1800), RepeatMode.Reverse), label="")
     val radarColor = when(selectedMode) { ConnectionMode.WIFI -> Color(0xFF7C4DFF); ConnectionMode.BLUETOOTH -> Color(0xFF29B6F6); else -> Color(0xFFAB47BC) }
     GlassScaffold { padding ->
         Box(Modifier.fillMaxSize().padding(padding)) {
             Column(Modifier.fillMaxSize().padding(16.dp)) {
                 GlassCard(Modifier.fillMaxWidth()) {
                     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
-                        Column { Text("Nearby Peers", color = Color.White, fontSize = 22.sp, fontWeight = FontWeight.Bold); Text("${peers.size} peers • ${selectedMode.name}", color = radarColor, fontSize = 12.sp) }
-                        Box(Modifier.size(40.dp).clip(CircleShape).background(Color.White.copy(0.12f)).border(1.dp, Color.White.copy(0.2f), CircleShape).clickable { showOptions = true }, contentAlignment = Alignment.Center) { Icon(Icons.Default.Settings, null, tint = Color.White) }
+                        Column { 
+                            Text("GlassLink v1.1 NEW", color = Color.White, fontSize = 22.sp, fontWeight = FontWeight.Bold)
+                            Text("${peers.size} peers • ${selectedMode.name} • TAP ⚙️", color = radarColor, fontSize = 12.sp) 
+                        }
+                        Box(Modifier.size(44.dp).clip(CircleShape).background(Color.White.copy(0.15f)).border(1.dp, Color.White.copy(0.3f), CircleShape).clickable { showOptions = true }, contentAlignment = Alignment.Center) { Icon(Icons.Default.Settings, null, tint = Color.White, modifier=Modifier.size(24.dp)) }
                     }
                 }
                 Box(Modifier.weight(1f).fillMaxWidth(), contentAlignment = Alignment.Center) {
@@ -44,7 +49,7 @@ import com.glasslink.presentation.components.*
                 }
             }
             if(showOptions) {
-                Box(Modifier.fillMaxSize().background(Color.Black.copy(0.5f)).clickable { showOptions = false }, contentAlignment = Alignment.BottomCenter) {
+                Box(Modifier.fillMaxSize().background(Color.Black.copy(0.6f)).clickable { showOptions = false }, contentAlignment = Alignment.BottomCenter) {
                     GlassCard(Modifier.fillMaxWidth().padding(16.dp)) { ConnectionOptionsSheet(selected = selectedMode) { mode -> selectedMode = mode; showOptions = false } }
                 }
             }
