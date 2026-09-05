@@ -15,11 +15,11 @@ import com.glasslink.presentation.components.GlassScaffold
 @Composable
 fun ChatScreen(messages: List<Message>, onSend: (String) -> Unit, onVoice: () -> Unit) {
     var text by remember { mutableStateOf("") }
-    GlassScaffold {
-        Column(modifier = Modifier.fillMaxSize()) {
+    GlassScaffold { padding ->
+        Column(modifier = Modifier.fillMaxSize().padding(padding)) {
             LazyColumn(modifier = Modifier.weight(1f).padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 items(messages) { m ->
-                    GlassCard(modifier = Modifier.fillMaxWidth(0.8f).padding(4.dp)) {
+                    GlassCard(modifier = Modifier.fillMaxWidth(0.8f)) {
                         Column(modifier = Modifier.padding(12.dp)) {
                             Text(m.text, color = Color.White)
                             Text("AES-GCM 256", style = MaterialTheme.typography.labelSmall, color = Color(0xFF18FFFF))

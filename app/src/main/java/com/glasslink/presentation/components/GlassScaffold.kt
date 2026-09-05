@@ -1,10 +1,7 @@
 package com.glasslink.presentation.components
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -40,12 +37,4 @@ fun GlassScaffold(
             }
         }
     }
-}
-
-// Overload عشان الشاشات الجديدة اللي بتستخدم GlassScaffold { ... } من غير Padding
-@Composable
-fun GlassScaffold(
-    content: @Composable () -> Unit
-) {
-    GlassScaffold(topBar = {}) { _ -> content() }
 }
