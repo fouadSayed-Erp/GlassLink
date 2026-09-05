@@ -40,7 +40,7 @@ dependencies {
     kapt("com.google.dagger:hilt-compiler:2.48")
     implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
     implementation("com.google.android.gms:play-services-nearby:18.7.0")
-    implementation("org.webrtc:google-webrtc:1.0.32006")
+    implementation("io.github.webrtc-sdk:android:125.6422.06.1")
     implementation("androidx.security:security-crypto:1.1.0-alpha06")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.3")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.2")
