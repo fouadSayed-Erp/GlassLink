@@ -24,14 +24,10 @@ import androidx.compose.ui.unit.sp
 import com.glasslink.presentation.components.*
 
 @Composable
-fun NearbyScannerScreen(peers: List<String> = emptyList()) {
-    NearbyContent(peers)
-}
+fun NearbyScannerScreen(peers: List<String> = emptyList()) { NearbyContent(peers) }
 
 @Composable
-fun NearbyScreen(peers: List<String> = emptyList()) {
-    NearbyContent(peers)
-}
+fun NearbyScreen(peers: List<String> = emptyList()) { NearbyContent(peers) }
 
 @Composable
 fun NearbyContent(peers: List<String>) {
