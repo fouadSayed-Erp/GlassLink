@@ -1,5 +1,4 @@
 package com.glasslink.presentation.nearby
-
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -22,21 +21,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.glasslink.presentation.components.*
-
-@Composable
-fun NearbyScannerScreen(peers: List<String> = emptyList()) { NearbyContent(peers) }
-
-@Composable
-fun NearbyScreen(peers: List<String> = emptyList()) { NearbyContent(peers) }
-
-@Composable
-fun NearbyContent(peers: List<String>) {
+@Composable fun NearbyScannerScreen(peers: List<String> = emptyList()) { NearbyContent(peers) }
+@Composable fun NearbyScreen(peers: List<String> = emptyList()) { NearbyContent(peers) }
+@Composable fun NearbyContent(peers: List<String>) {
     var selectedMode by remember { mutableStateOf(ConnectionMode.AUTO) }
     var showOptions by remember { mutableStateOf(false) }
     val infinite = rememberInfiniteTransition(label = "radar")
     val pulse by infinite.animateFloat(0.9f, 1.15f, infiniteRepeatable(tween(1800), RepeatMode.Reverse), label = "")
     val radarColor = when(selectedMode) { ConnectionMode.WIFI -> Color(0xFF7C4DFF); ConnectionMode.BLUETOOTH -> Color(0xFF29B6F6); else -> Color(0xFFAB47BC) }
-
     GlassScaffold { padding ->
         Box(Modifier.fillMaxSize().padding(padding)) {
             Column(Modifier.fillMaxSize().padding(16.dp)) {
@@ -50,13 +42,10 @@ fun NearbyContent(peers: List<String>) {
                     repeat(3) { i -> Box(Modifier.size((220 + i * 85).dp).scale(pulse - i*0.07f).clip(CircleShape).border(1.dp, radarColor.copy(0.15f - i*0.04f), CircleShape)) }
                     Box(Modifier.size(180.dp).clip(CircleShape).background(Brush.radialGradient(listOf(radarColor.copy(0.5f), radarColor.copy(0.15f)))).border(1.5.dp, Color.White.copy(0.25f), CircleShape), contentAlignment = Alignment.Center) { Icon(Icons.Default.Wifi, null, tint = Color.White, modifier = Modifier.size(56.dp)) }
                 }
-                GlassCard(Modifier.fillMaxWidth()) { Text("دوس ⚙️ فوق واختار Wi-Fi ولا Bluetooth", color = Color.White.copy(0.7f), fontSize = 13.sp) }
             }
             if(showOptions) {
                 Box(Modifier.fillMaxSize().background(Color.Black.copy(0.5f)).clickable { showOptions = false }, contentAlignment = Alignment.BottomCenter) {
-                    GlassCard(Modifier.fillMaxWidth().padding(16.dp)) {
-                        ConnectionOptionsSheet(selected = selectedMode) { mode -> selectedMode = mode; showOptions = false }
-                    }
+                    GlassCard(Modifier.fillMaxWidth().padding(16.dp)) { ConnectionOptionsSheet(selected = selectedMode) { mode -> selectedMode = mode; showOptions = false } }
                 }
             }
         }

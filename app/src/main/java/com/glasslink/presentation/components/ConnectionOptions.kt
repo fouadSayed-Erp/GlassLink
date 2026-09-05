@@ -25,8 +25,8 @@ data class ConnectionOption(val mode: ConnectionMode, val title: String, val sub
 @Composable
 fun ConnectionOptionsSheet(selected: ConnectionMode, onSelect: (ConnectionMode) -> Unit) {
     val options = listOf(
-        ConnectionOption(ConnectionMode.WIFI, "Wi-Fi Direct", "سريع • 100 متر • فيديو", Icons.Default.Wifi, Color(0xFF7C4DFF)),
-        ConnectionOption(ConnectionMode.BLUETOOTH, "Bluetooth", "موفر • 10 متر • شات", Icons.Default.Bluetooth, Color(0xFF29B6F6)),
+        ConnectionOption(ConnectionMode.WIFI, "Wi-Fi Direct", "سريع • 100 متر", Icons.Default.Wifi, Color(0xFF7C4DFF)),
+        ConnectionOption(ConnectionMode.BLUETOOTH, "Bluetooth", "موفر • 10 متر", Icons.Default.Bluetooth, Color(0xFF29B6F6)),
         ConnectionOption(ConnectionMode.AUTO, "Auto", "يختار الأفضل", Icons.Default.Wifi, Color(0xFF66BB6A))
     )
     Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
