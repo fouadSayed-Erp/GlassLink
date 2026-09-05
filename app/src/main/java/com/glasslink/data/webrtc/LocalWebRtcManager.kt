@@ -15,7 +15,7 @@ class LocalWebRtcManager @Inject constructor(private val context: Context) {
         factory = PeerConnectionFactory.builder()
             .setVideoDecoderFactory(DefaultVideoDecoderFactory(eglBase.eglBaseContext))
             .setVideoEncoderFactory(DefaultVideoEncoderFactory(eglBase.eglBaseContext, true, true))
-            .setAudioDeviceModule(JavaAudioDeviceModule.builder(context).createAudioDeviceModule())
+            .setAudioDeviceModule( // JavaAudioDeviceModule.builder(context).createAudioDeviceModule())
             .createPeerConnectionFactory()
     }
     fun createConnection(observer: PeerConnection.Observer): PeerConnection {

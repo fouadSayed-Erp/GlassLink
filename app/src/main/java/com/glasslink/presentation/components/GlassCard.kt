@@ -1,6 +1,6 @@
 
 package com.glasslink.presentation.components
-import android.graphics.RenderEffect
+import androidx.compose.ui.graphics.RenderEffect
 import android.graphics.Shader
 import android.os.Build
 import androidx.compose.foundation.background
