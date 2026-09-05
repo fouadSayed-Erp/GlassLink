@@ -14,20 +14,7 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun GlassCard(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
-    Box(
-        modifier = modifier
-            .clip(RoundedCornerShape(22.dp))
-            .background(
-                Brush.linearGradient(
-                    listOf(Color.White.copy(0.18f), Color.White.copy(0.06f))
-                )
-            )
-            .border(
-                1.dp,
-                Brush.linearGradient(listOf(Color.White.copy(0.35f), Color.White.copy(0.08f))),
-                RoundedCornerShape(22.dp)
-            )
-    ) {
+    Box(modifier.clip(RoundedCornerShape(22.dp)).background(Brush.linearGradient(listOf(Color.White.copy(0.18f), Color.White.copy(0.06f)))).border(1.dp, Brush.linearGradient(listOf(Color.White.copy(0.35f), Color.White.copy(0.08f))), RoundedCornerShape(22.dp))) {
         Box(Modifier.padding(16.dp)) { content() }
     }
 }
