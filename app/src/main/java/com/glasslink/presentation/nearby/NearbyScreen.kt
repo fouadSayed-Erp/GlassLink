@@ -1,4 +1,5 @@
 package com.glasslink.presentation.nearby
+import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -19,7 +20,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.animation.core.*
 import com.glasslink.presentation.components.*
 
 @Composable fun NearbyScannerScreen(peers: List<String> = emptyList()) { NearbyContent(peers) }
@@ -32,15 +32,15 @@ import com.glasslink.presentation.components.*
     val pulse by infinite.animateFloat(0.9f, 1.15f, infiniteRepeatable(tween(1800), RepeatMode.Reverse), label="")
     val radarColor = when(selectedMode) { ConnectionMode.WIFI -> Color(0xFF7C4DFF); ConnectionMode.BLUETOOTH -> Color(0xFF29B6F6); else -> Color(0xFFAB47BC) }
     GlassScaffold { padding ->
-        Box(Modifier.fillMaxSize().padding(padding)) {
+        Box(Modifier.fillMaxSize().padding(padding).background(Brush.verticalGradient(listOf(Color(0xFF08080F), Color(0xFF130E2A))))) {
             Column(Modifier.fillMaxSize().padding(16.dp)) {
                 GlassCard(Modifier.fillMaxWidth()) {
                     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
                         Column { 
-                            Text("GlassLink v1.1 NEW", color = Color.White, fontSize = 22.sp, fontWeight = FontWeight.Bold)
-                            Text("${peers.size} peers • ${selectedMode.name} • TAP ⚙️", color = radarColor, fontSize = 12.sp) 
+                            Text("GlassLink v1.2 NEW", color = Color.White, fontSize = 22.sp, fontWeight = FontWeight.Bold)
+                            Text("${peers.size} peers • ${selectedMode.name} • دوس ⚙️", color = radarColor, fontSize = 12.sp) 
                         }
-                        Box(Modifier.size(44.dp).clip(CircleShape).background(Color.White.copy(0.15f)).border(1.dp, Color.White.copy(0.3f), CircleShape).clickable { showOptions = true }, contentAlignment = Alignment.Center) { Icon(Icons.Default.Settings, null, tint = Color.White, modifier=Modifier.size(24.dp)) }
+                        Box(Modifier.size(48.dp).clip(CircleShape).background(Color.White.copy(0.15f)).border(1.dp, Color.White.copy(0.3f), CircleShape).clickable { showOptions = true }, contentAlignment = Alignment.Center) { Icon(Icons.Default.Settings, null, tint = Color.White, modifier=Modifier.size(28.dp)) }
                     }
                 }
                 Box(Modifier.weight(1f).fillMaxWidth(), contentAlignment = Alignment.Center) {
