@@ -20,16 +20,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.glasslink.domain.model.Peer
 import com.glasslink.presentation.components.*
 
-@Composable 
+@Composable
 fun NearbyScannerScreen(
-    peers: List<Any> = emptyList(),
-    onPeerClick: (Any) -> Unit = {},
-    onConnect: (Any) -> Unit = {}
-) { NearbyContent(peers) }
-
-@Composable fun NearbyContent(peers: List<Any>) {
+    peers: List<Peer> = emptyList(),
+    onPeerClick: (Peer) -> Unit = {}
+) {
     var selectedMode by remember { mutableStateOf(ConnectionMode.AUTO) }
     var showOptions by remember { mutableStateOf(false) }
     val infinite = rememberInfiniteTransition(label="radar")
@@ -40,7 +38,10 @@ fun NearbyScannerScreen(
             Column(Modifier.fillMaxSize().padding(16.dp)) {
                 GlassCard(Modifier.fillMaxWidth()) {
                     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
-                        Column { Text("GlassLink v1.5 FIXED", color = Color.White, fontSize = 22.sp, fontWeight = FontWeight.Bold); Text("${peers.size} peers • ${selectedMode.name} • دوس ⚙️", color = radarColor, fontSize = 12.sp) }
+                        Column { 
+                            Text("GlassLink v1.6 FIXED", color = Color.White, fontSize = 22.sp, fontWeight = FontWeight.Bold)
+                            Text("${peers.size} peers • ${selectedMode.name} • دوس ⚙️", color = radarColor, fontSize = 12.sp) 
+                        }
                         Box(Modifier.size(48.dp).clip(CircleShape).background(Color.White.copy(0.15f)).border(1.dp, Color.White.copy(0.3f), CircleShape).clickable { showOptions = true }, contentAlignment = Alignment.Center) { Icon(Icons.Default.Settings, null, tint = Color.White, modifier=Modifier.size(28.dp)) }
                     }
                 }
