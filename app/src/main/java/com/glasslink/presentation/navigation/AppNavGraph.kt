@@ -1,5 +1,5 @@
 package com.glasslink.presentation.navigation
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -17,12 +17,20 @@ sealed class Screen(val route: String) {
 @Composable
 fun AppNavGraph(peers: List<Peer>) {
     val nav = rememberNavController()
+    var selectedPeer by remember { mutableStateOf<Peer?>(null) }
+    
     NavHost(nav, startDestination = Screen.Scanner.route) {
         composable(Screen.Scanner.route) {
-            NearbyScannerScreen(peers = peers)
+            NearbyScannerScreen(
+                peers = peers,
+                onPeerClick = { peer ->
+                    selectedPeer = peer
+                    nav.navigate(Screen.Chats.route)
+                }
+            )
         }
         composable(Screen.Chats.route) {
-            ChatListScreen(peers, {})
+            ChatListScreen(peers, onChatClick = { p -> selectedPeer = p })
         }
         composable(Screen.Vault.route) {
             MediaVaultScreen()

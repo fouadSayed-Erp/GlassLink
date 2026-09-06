@@ -4,8 +4,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Wifi
 import androidx.compose.material3.Icon
@@ -33,21 +37,51 @@ fun NearbyScannerScreen(
     val infinite = rememberInfiniteTransition(label="radar")
     val pulse by infinite.animateFloat(0.9f, 1.15f, infiniteRepeatable(tween(1800), RepeatMode.Reverse), label="")
     val radarColor = when(selectedMode) { ConnectionMode.WIFI -> Color(0xFF7C4DFF); ConnectionMode.BLUETOOTH -> Color(0xFF29B6F6); else -> Color(0xFFAB47BC) }
+    
     GlassScaffold { padding ->
         Box(Modifier.fillMaxSize().padding(padding).background(Brush.verticalGradient(listOf(Color(0xFF08080F), Color(0xFF130E2A))))) {
             Column(Modifier.fillMaxSize().padding(16.dp)) {
                 GlassCard(Modifier.fillMaxWidth()) {
                     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
                         Column { 
-                            Text("GlassLink v1.6 FIXED", color = Color.White, fontSize = 22.sp, fontWeight = FontWeight.Bold)
-                            Text("${peers.size} peers • ${selectedMode.name} • دوس ⚙️", color = radarColor, fontSize = 12.sp) 
+                            Text("GlassLink v1.7 CHAT FIX", color = Color.White, fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                            Text("${peers.size} peers • ${selectedMode.name}", color = radarColor, fontSize = 12.sp) 
                         }
                         Box(Modifier.size(48.dp).clip(CircleShape).background(Color.White.copy(0.15f)).border(1.dp, Color.White.copy(0.3f), CircleShape).clickable { showOptions = true }, contentAlignment = Alignment.Center) { Icon(Icons.Default.Settings, null, tint = Color.White, modifier=Modifier.size(28.dp)) }
                     }
                 }
-                Box(Modifier.weight(1f).fillMaxWidth(), contentAlignment = Alignment.Center) {
-                    repeat(3) { i -> Box(Modifier.size((220 + i * 85).dp).scale(pulse - i*0.07f).clip(CircleShape).border(1.dp, radarColor.copy(0.15f - i*0.04f), CircleShape)) }
-                    Box(Modifier.size(180.dp).clip(CircleShape).background(Brush.radialGradient(listOf(radarColor.copy(0.5f), radarColor.copy(0.15f)))).border(1.5.dp, Color.White.copy(0.25f), CircleShape), contentAlignment = Alignment.Center) { Icon(Icons.Default.Wifi, null, tint = Color.White, modifier = Modifier.size(56.dp)) }
+                
+                Box(Modifier.fillMaxWidth().height(240.dp), contentAlignment = Alignment.Center) {
+                    repeat(3) { i -> Box(Modifier.size((180 + i * 60).dp).scale(pulse - i*0.07f).clip(CircleShape).border(1.dp, radarColor.copy(0.15f - i*0.04f), CircleShape)) }
+                    Box(Modifier.size(120.dp).clip(CircleShape).background(Brush.radialGradient(listOf(radarColor.copy(0.5f), radarColor.copy(0.15f)))).border(1.5.dp, Color.White.copy(0.25f), CircleShape), contentAlignment = Alignment.Center) { Icon(Icons.Default.Wifi, null, tint = Color.White, modifier = Modifier.size(40.dp)) }
+                }
+
+                // لستة الناس اللي حواليك - دوس يفتح الشات
+                GlassCard(Modifier.fillMaxWidth().weight(1f)) {
+                    Column {
+                        Text("القريبين منك", color = Color.White, fontSize = 16.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(bottom = 12.dp))
+                        if (peers.isEmpty()) {
+                            Box(Modifier.fillMaxWidth().height(80.dp), contentAlignment = Alignment.Center) {
+                                Text("مفيش حد قريب دلوقتي - بيعمل Scan...", color = Color.White.copy(0.5f), fontSize = 13.sp)
+                            }
+                        } else {
+                            LazyColumn(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                                items(peers) { peer ->
+                                    Row(
+                                        Modifier.fillMaxWidth().clip(RoundedCornerShape(12.dp)).background(Color.White.copy(0.08f)).border(1.dp, Color.White.copy(0.1f), RoundedCornerShape(12.dp)).clickable { onPeerClick(peer) }.padding(12.dp),
+                                        verticalAlignment = Alignment.CenterVertically
+                                    ) {
+                                        Box(Modifier.size(40.dp).clip(CircleShape).background(radarColor.copy(0.3f)), contentAlignment = Alignment.Center) { Icon(Icons.Default.Person, null, tint = Color.White) }
+                                        Spacer(Modifier.width(12.dp))
+                                        Column(Modifier.weight(1f)) {
+                                            Text(peer.name ?: peer.toString(), color = Color.White, fontSize = 14.sp, fontWeight = FontWeight.Medium)
+                                            Text("دوس لفتح الدردشة", color = Color.White.copy(0.5f), fontSize = 11.sp)
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
             if(showOptions) {
